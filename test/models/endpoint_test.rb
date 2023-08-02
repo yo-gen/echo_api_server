@@ -19,4 +19,14 @@ class EndpointTest < ActiveSupport::TestCase
     endpoint = build(:endpoint_without_response)
     assert_not endpoint.save, "Saved the endpoint without a response"
   end
+
+  test "should not save endpoint with invalid verb" do
+    endpoint = build(:endpoint_with_invalid_verb)
+    assert_not endpoint.save, "Saved the endpoint with a invalid verb"
+  end
+
+  test "should not save endpoint with invalid response code" do
+    endpoint = build(:endpoint_with_invalid_response_code)
+    assert_not endpoint.save, "Saved the endpoint with a invalid response code"
+  end
 end

@@ -42,4 +42,24 @@ FactoryBot.define do
     verb { "GET" }
     path { "/greetings" }
   end
+
+  factory :endpoint_with_invalid_verb, class: 'Endpoint' do
+    verb { "HAVE" }
+    path { "/greetings" }
+    response { {
+      code: 200,
+      headers: {"key": "secret_api_key"},
+      body: {message: "Hello from echo"}
+    } }
+  end
+
+  factory :endpoint_with_invalid_response_code, class: 'Endpoint' do
+    verb { "GET" }
+    path { "/greetings" }
+    response { {
+      code: 777,
+      headers: {"key": "secret_api_key"},
+      body: {message: "Hello from echo"}
+    } }
+  end
 end
