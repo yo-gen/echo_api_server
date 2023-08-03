@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+require 'English'
 FactoryBot.define do
   factory :valid_get_endpoint, class: 'Endpoint' do
     verb { 'GET' }
@@ -101,7 +104,7 @@ FactoryBot.define do
 
   factory :endpoint_with_invalid_path, class: 'Endpoint' do
     verb { 'GET' }
-    path { "/aa..##{$$}%%^^&&" }
+    path { "/aa..##{$PROCESS_ID}%%^^&&" }
     response do
       {
         code: 200,

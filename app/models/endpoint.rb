@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Endpoint < ApplicationRecord
-  VALID_HTTP_VERBS = %w[GET HEAD POST PUT PATCH DELETE CONNECT OPTIONS TRACE]
+  VALID_HTTP_VERBS = %w[GET HEAD POST PUT PATCH DELETE CONNECT OPTIONS TRACE].freeze
 
   validates_uniqueness_of :path, scope: [:verb]
 

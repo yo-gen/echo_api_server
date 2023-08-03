@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EndpointsController < ApplicationController
   def mock
     endpoint = Endpoint.where(verb: request.method, path: request.path).first
