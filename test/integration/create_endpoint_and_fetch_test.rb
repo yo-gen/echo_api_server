@@ -1,12 +1,19 @@
-require "test_helper"
+require 'test_helper'
 
 class CreateEndpointAndFetchTest < ActionDispatch::IntegrationTest
-  test "should create endpoint and fetch" do
+  test 'should create endpoint and fetch' do
     @endpoint = build(:valid_get_endpoint)
-    post endpoints_url, params: {data: {type: "endpoints", attributes: { path: @endpoint.path, response: @endpoint.response, verb: @endpoint.verb }}}, as: :json, headers: {
-      'Accept' => JSONAPI::MEDIA_TYPE,
-      'Content-Type' => JSONAPI::MEDIA_TYPE
-    }
+    post endpoints_url,
+         params: {
+           data: {
+             type: 'endpoints',
+             attributes: { path: @endpoint.path, response: @endpoint.response, verb: @endpoint.verb }
+           }
+         }, as: :json,
+         headers: {
+           'Accept' => JSONAPI::MEDIA_TYPE,
+           'Content-Type' => JSONAPI::MEDIA_TYPE
+         }
     get_response_data = get @endpoint.path, as: :json, headers: {
       'Accept' => JSONAPI::MEDIA_TYPE,
       'Content-Type' => JSONAPI::MEDIA_TYPE
