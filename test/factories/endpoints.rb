@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 require 'English'
+
 FactoryBot.define do
   factory :valid_get_endpoint, class: 'Endpoint' do
     verb { 'GET' }
