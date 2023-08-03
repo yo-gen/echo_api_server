@@ -21,6 +21,7 @@ PostgreSQL v10 or above
 ```rails db:migrate```
 
 * How to run the app
+
 Install gems using
 
 ```
