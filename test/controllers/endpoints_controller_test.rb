@@ -3,12 +3,14 @@ require "test_helper"
 class EndpointsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
-    @endpoint = create(:valid_get_endpoint)
+    create(:valid_get_endpoint)
+    create(:valid_patch_endpoint)
     get endpoints_url, as: :json, headers: {
       'Accept' => JSONAPI::MEDIA_TYPE,
       'Content-Type' => JSONAPI::MEDIA_TYPE
     }
     assert_response :success
+    assert_equal 2, JSON.parse(response.body)["data"].length
   end
 
   test "should create endpoint" do
@@ -39,7 +41,12 @@ class EndpointsControllerTest < ActionDispatch::IntegrationTest
       'Accept' => JSONAPI::MEDIA_TYPE,
       'Content-Type' => JSONAPI::MEDIA_TYPE
     }
+    response_json = JSON.parse(response.body)
+
     assert_response :success
+    assert_equal @new_endpoint.verb, response_json["data"]["attributes"]["verb"]
+    assert_equal @new_endpoint.path, response_json["data"]["attributes"]["path"]
+    assert_equal @new_endpoint.response, response_json["data"]["attributes"]["response"]
   end
 
   test "should destroy endpoint" do
@@ -54,9 +61,18 @@ class EndpointsControllerTest < ActionDispatch::IntegrationTest
     assert_response :no_content
   end
 
-  test "should mock endpoint" do
+  test "should mock get endpoint" do
     @endpoint = create(:valid_get_endpoint)
     get @endpoint.path, as: :json, headers: {
+      'Accept' => JSONAPI::MEDIA_TYPE,
+      'Content-Type' => JSONAPI::MEDIA_TYPE
+    }
+    assert_response :success
+  end
+
+  test "should mock patch endpoint" do
+    @endpoint = create(:valid_patch_endpoint)
+    patch @endpoint.path, as: :json, headers: {
       'Accept' => JSONAPI::MEDIA_TYPE,
       'Content-Type' => JSONAPI::MEDIA_TYPE
     }

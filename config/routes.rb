@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   jsonapi_resources :endpoints
-  get '*path', controller: 'endpoints', action: 'mock'
+  match '*path', controller: 'endpoints', action: 'mock', via: :all
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

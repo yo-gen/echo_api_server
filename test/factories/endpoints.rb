@@ -10,6 +10,16 @@ FactoryBot.define do
     } }
   end
 
+  factory :valid_patch_endpoint, class: 'Endpoint' do
+    verb { "PATCH" }
+    path { "/greetings" }
+    response { {
+      code: 200,
+      headers: {"patch_key": "patch_secret_api_key"},
+      body: {message: "Hello this is patch request from echo"}
+    } }
+  end
+
   factory :valid_post_endpoint, class: 'Endpoint' do
     verb { "POST" }
     path { "/greetings" }
@@ -58,6 +68,26 @@ FactoryBot.define do
     path { "/greetings" }
     response { {
       code: 777,
+      headers: {"key": "secret_api_key"},
+      body: {message: "Hello from echo"}
+    } }
+  end
+
+  factory :endpoint_with_path_endpoints, class: 'Endpoint' do
+    verb { "GET" }
+    path { "/endpoints/abcd" }
+    response { {
+      code: 200,
+      headers: {"key": "secret_api_key"},
+      body: {message: "Hello from echo"}
+    } }
+  end
+
+  factory :endpoint_with_invalid_path, class: 'Endpoint' do
+    verb { "GET" }
+    path { "/aa..##$$%%^^&&" }
+    response { {
+      code: 200,
       headers: {"key": "secret_api_key"},
       body: {message: "Hello from echo"}
     } }

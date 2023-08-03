@@ -6,7 +6,17 @@ class Endpoint < ApplicationRecord
   validates_presence_of :verb, :path, :response
   validates :verb, inclusion: { in: VALID_HTTP_VERBS}
 
+  validate :path_is_valid
+
   validate :valid_code_present_in_response
+
+  def path_is_valid
+    if path.present? && path.start_with?("/endpoints/")
+      errors.add(:path, "/endpoints/ path is reserved for Endpoints API and is not valid")
+    elsif !valid_relative_path?(path)
+      errors.add(:path, "path is not a valid URI")
+    end
+  end
 
   def valid_code_present_in_response
     if response.present?
@@ -16,5 +26,12 @@ class Endpoint < ApplicationRecord
         errors.add(:response, "code is not valid HTTP response code")
       end
     end
+  end
+
+  def valid_relative_path?(path)
+    uri = URI.parse(path)
+    uri.relative? && !uri.path.empty?
+  rescue URI::InvalidURIError
+    false
   end
 end
